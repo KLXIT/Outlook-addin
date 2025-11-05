@@ -5,7 +5,7 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
 
-  <Id>9d22f74a-3e5d-4e35-9a9a-5b3c8f002aaa</Id>
+  <Id>f3b3f0c8-2b5f-4bbf-9e5f-44b4d4b6a123</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Kalexius</ProviderName>
   <DisplayName DefaultValue="Wrike ID Reminder" />
@@ -37,10 +37,9 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <LaunchEvents>
-          <!-- ✅ Use RAW GitHub URL for the FunctionFile -->
-          <LaunchEvent 
-              Type="OnMessageSend" 
-              FunctionName="onMessageSendHandler" 
+          <LaunchEvent
+              Type="OnMessageSend"
+              FunctionName="onMessageSendHandler"
               SourceLocation="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/functions.js" />
         </LaunchEvents>
       </Host>
