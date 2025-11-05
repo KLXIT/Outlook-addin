@@ -38,9 +38,9 @@
       <Host xsi:type="MailHost">
         <LaunchEvents>
           <LaunchEvent
-               Type="OnMessageSend"
-               FunctionName="onMessageSendHandler"
-               SourceLocation="https://klxit.github.io/Outlook-addin/functions.html" />
+              Type="OnMessageSend"
+              FunctionName="onMessageSendHandler"
+              SourceLocation="https://klxit.github.io/Outlook-addin/functions.html" />
         </LaunchEvents>
       </Host>
     </Hosts>
@@ -48,10 +48,9 @@
     <Resources>
       <bt:Urls>
         <bt:Url id="FunctionFileUrl"
-                   DefaultValue="https://klxit.github.io/Outlook-addin/functions.html" />
+                DefaultValue="https://klxit.github.io/Outlook-addin/functions.html" />
       </bt:Urls>
     </Resources>
 
   </VersionOverrides>
 </OfficeApp>
-
