@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Wrike Task ID Reminder</title>
+  </head>
+  <body style="font-family:Segoe UI, sans-serif; text-align:center; padding:20px;">
+    <h3>Missing Wrike Task ID</h3>
+    <p>No Wrike ID found in the email subject.<br>
+    Example: <b>WRK-12345</b> or <b>#12345</b></p>
+    <button id="yes" style="margin:10px;">Send Anyway</button>
+    <button id="no" style="margin:10px;">Cancel</button>
+
+    <script>
+      document.getElementById("yes").onclick = () => Office.context.ui.messageParent("yes");
+      document.getElementById("no").onclick = () => Office.context.ui.messageParent("no");
+    </script>
+  </body>
+</html>

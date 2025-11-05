@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+
+  <Id>9d22f74a-3e5d-4e35-9a9a-5b3c8f002aaa</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Kalexius</ProviderName>
+  <DisplayName DefaultValue="Wrike ID Reminder" />
+  <Description DefaultValue="Reminds users to include a Wrike Task ID before sending emails." />
+  <IconUrl DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/icon-32.png" />
+  <SupportUrl DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/" />
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.12">
+      <Set Name="Mailbox" />
+    </Sets>
+  </Requirements>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+                    xsi:type="VersionOverridesV1_1">
+
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.12">
+        <bt:Set Name="Mailbox" />
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <LaunchEvents>
+          <!-- 👇 Add explicit FunctionFile reference -->
+          <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SourceLocation="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/functions.js" />
+        </LaunchEvents>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="FunctionFileUrl" DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/functions.js" />
+      </bt:Urls>
+    </Resources>
+
+  </VersionOverrides>
+</OfficeApp>
