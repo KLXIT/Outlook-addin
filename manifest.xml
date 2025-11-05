@@ -10,8 +10,8 @@
   <ProviderName>Kalexius</ProviderName>
   <DisplayName DefaultValue="Wrike ID Reminder" />
   <Description DefaultValue="Reminds users to include a Wrike Task ID before sending emails." />
-  <IconUrl DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/icon-32.png" />
-  <SupportUrl DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/" />
+  <IconUrl DefaultValue="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/icon-32.png" />
+  <SupportUrl DefaultValue="https://github.com/KLXIT/Outlook-addin" />
 
   <Hosts>
     <Host Name="Mailbox" />
@@ -37,15 +37,18 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <LaunchEvents>
-          <!-- 👇 Add explicit FunctionFile reference -->
-          <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SourceLocation="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/functions.js" />
+          <!-- ✅ Use RAW GitHub URL for the FunctionFile -->
+          <LaunchEvent 
+              Type="OnMessageSend" 
+              FunctionName="onMessageSendHandler" 
+              SourceLocation="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/functions.js" />
         </LaunchEvents>
       </Host>
     </Hosts>
 
     <Resources>
       <bt:Urls>
-        <bt:Url id="FunctionFileUrl" DefaultValue="https://kalexius.sharepoint.com/sites/KLXAppCatalogue/OutlookAddin/WrikeAdd-in/functions.js" />
+        <bt:Url id="FunctionFileUrl" DefaultValue="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/functions.js" />
       </bt:Urls>
     </Resources>
 
