@@ -24,8 +24,9 @@
 
   <Permissions>ReadWriteItem</Permissions>
 
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
-                    xsi:type="VersionOverridesV1_1">
+  <VersionOverrides
+      xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+      xsi:type="VersionOverridesV1_1">
 
     <Requirements>
       <bt:Sets DefaultMinVersion="1.12">
