@@ -39,7 +39,7 @@
           <LaunchEvent
               Type="OnMessageSend"
               FunctionName="onMessageSendHandler"
-              SourceLocation="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/functions.js" />
+              SourceLocation="https://klxit.github.io/Outlook-addin/functions.js" />
         </LaunchEvents>
       </Host>
     </Hosts>
@@ -47,7 +47,7 @@
     <Resources>
       <bt:Urls>
         <bt:Url id="FunctionFileUrl"
-                DefaultValue="https://raw.githubusercontent.com/KLXIT/Outlook-addin/main/functions.js" />
+                DefaultValue="https://klxit.github.io/Outlook-addin/functions.js" />
       </bt:Urls>
     </Resources>
 
