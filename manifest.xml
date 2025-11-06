@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OfficeApp 
-  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" 
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <!-- App Info -->
+  <!-- Basic Info -->
   <Id>f3b3f0c8-2b5f-4bbf-9e5f-44b4d4b6a123</Id>
   <Version>1.0.0.1</Version>
   <ProviderName>Kalexius</ProviderName>
@@ -16,30 +16,24 @@
   <HighResolutionIconUrl DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
   <SupportUrl DefaultValue="https://github.com/KLXIT/Outlook-addin"/>
 
-  <!-- Domain Access -->
   <AppDomains>
     <AppDomain>https://klxit.github.io</AppDomain>
   </AppDomains>
 
-  <!-- Host -->
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Requirements -->
   <Requirements>
     <Sets DefaultMinVersion="1.10">
       <Set Name="Mailbox"/>
     </Sets>
   </Requirements>
 
-  <!-- Permissions -->
   <Permissions>ReadWriteItem</Permissions>
 
   <!-- Extension Points -->
   <ExtensionPoints>
-
-    <!-- Compose Message: Add button -->
     <ExtensionPoint xsi:type="MessageComposeCommandSurface">
       <OfficeTab id="TabDefault">
         <Group id="WrikeGroup">
@@ -53,23 +47,15 @@
             <Icon>
               <bt:Image size="16" resid="icon16"/>
               <bt:Image size="32" resid="icon32"/>
-              <bt:Image size="80" resid="icon80"/>
             </Icon>
             <Action xsi:type="ExecuteFunction">
               <FunctionName>checkWrikeId</FunctionName>
+              <SourceLocation resid="functionFile"/>
             </Action>
           </Control>
         </Group>
       </OfficeTab>
     </ExtensionPoint>
-
-    <!-- On Send Event (optional future feature) -->
-    <!--
-    <ExtensionPoint xsi:type="MessageSendCommandSurface">
-      <LaunchEvent Type="OnMessageSend" FunctionName="checkWrikeId" />
-    </ExtensionPoint>
-    -->
-
   </ExtensionPoints>
 
   <!-- Resources -->
@@ -77,7 +63,6 @@
     <bt:Images>
       <bt:Image id="icon16" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
       <bt:Image id="icon32" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
-      <bt:Image id="icon80" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
     </bt:Images>
 
     <bt:Urls>
@@ -90,11 +75,10 @@
     </bt:ShortStrings>
 
     <bt:LongStrings>
-      <bt:String id="buttonDescription" DefaultValue="Verify that your email subject includes a Wrike Task ID before sending."/>
+      <bt:String id="buttonDescription" DefaultValue="Checks if your subject includes a Wrike Task ID before sending."/>
     </bt:LongStrings>
   </Resources>
 
-  <!-- Function File -->
   <FunctionFile resid="functionFile"/>
 
 </OfficeApp>
