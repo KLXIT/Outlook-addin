@@ -4,28 +4,30 @@
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
-
   <Id>f3b3f0c8-2b5f-4bbf-9e5f-44b4d4b6a123</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Kalexius</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Wrike ID Reminder"/>
   <Description DefaultValue="Reminds users to include a Wrike Task ID before sending emails."/>
-  <SupportUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/"/>
-
-  <!-- ✅ Valid PNG icon references -->
   <IconUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/icons-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/icons-64.png"/>
-
+  <SupportUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/"/>
+  
+  <AppDomains>
+    <AppDomain>https://kalexius-outlook-addin.netlify.app</AppDomain>
+  </AppDomains>
+  
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
-
+  
   <Requirements>
     <Sets DefaultMinVersion="1.12">
       <Set Name="Mailbox"/>
     </Sets>
   </Requirements>
-
+  
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
@@ -34,24 +36,22 @@
       </DesktopSettings>
     </Form>
   </FormSettings>
-
+  
   <Permissions>ReadWriteItem</Permissions>
-
+  
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
-
-  <!-- ✅ Use VersionOverridesV1_1 and full namespace -->
+  
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
                     xsi:type="VersionOverridesV1_1">
-
     <Requirements>
       <bt:Sets DefaultMinVersion="1.12">
         <bt:Set Name="Mailbox"/>
       </bt:Sets>
     </Requirements>
-
+    
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
@@ -62,7 +62,7 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
-
+    
     <Resources>
       <bt:Images>
         <bt:Image id="Icon.16x16" DefaultValue="https://kalexius-outlook-addin.netlify.app/icons-64.png"/>
