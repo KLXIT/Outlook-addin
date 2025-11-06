@@ -4,9 +4,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" 
   xsi:type="MailApp">
-  
+
+  <!-- App Info -->
   <Id>f3b3f0c8-2b5f-4bbf-9e5f-44b4d4b6a123</Id>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.0.1</Version>
   <ProviderName>Kalexius</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Wrike ID Reminder"/>
@@ -14,34 +15,86 @@
   <IconUrl DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
   <SupportUrl DefaultValue="https://github.com/KLXIT/Outlook-addin"/>
-  
+
+  <!-- Domain Access -->
   <AppDomains>
     <AppDomain>https://klxit.github.io</AppDomain>
   </AppDomains>
-  
+
+  <!-- Host -->
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
-  
+
+  <!-- Requirements -->
   <Requirements>
-    <Sets DefaultMinVersion="1.1">
+    <Sets DefaultMinVersion="1.10">
       <Set Name="Mailbox"/>
     </Sets>
   </Requirements>
-  
-  <FormSettings>
-    <Form xsi:type="ItemRead">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://klxit.github.io/Outlook-addin/functions.html"/>
-        <RequestedHeight>250</RequestedHeight>
-      </DesktopSettings>
-    </Form>
-  </FormSettings>
-  
+
+  <!-- Permissions -->
   <Permissions>ReadWriteItem</Permissions>
-  
-  <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
-  </Rule>
+
+  <!-- Extension Points -->
+  <ExtensionPoints>
+
+    <!-- Compose Message: Add button -->
+    <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+      <OfficeTab id="TabDefault">
+        <Group id="WrikeGroup">
+          <Label resid="groupLabel"/>
+          <Control xsi:type="Button" id="WrikeCheckButton">
+            <Label resid="buttonLabel"/>
+            <Supertip>
+              <Title resid="buttonLabel"/>
+              <Description resid="buttonDescription"/>
+            </Supertip>
+            <Icon>
+              <bt:Image size="16" resid="icon16"/>
+              <bt:Image size="32" resid="icon32"/>
+              <bt:Image size="80" resid="icon80"/>
+            </Icon>
+            <Action xsi:type="ExecuteFunction">
+              <FunctionName>checkWrikeId</FunctionName>
+            </Action>
+          </Control>
+        </Group>
+      </OfficeTab>
+    </ExtensionPoint>
+
+    <!-- On Send Event (optional future feature) -->
+    <!--
+    <ExtensionPoint xsi:type="MessageSendCommandSurface">
+      <LaunchEvent Type="OnMessageSend" FunctionName="checkWrikeId" />
+    </ExtensionPoint>
+    -->
+
+  </ExtensionPoints>
+
+  <!-- Resources -->
+  <Resources>
+    <bt:Images>
+      <bt:Image id="icon16" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
+      <bt:Image id="icon32" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
+      <bt:Image id="icon80" DefaultValue="https://klxit.github.io/Outlook-addin/icons-64.png"/>
+    </bt:Images>
+
+    <bt:Urls>
+      <bt:Url id="functionFile" DefaultValue="https://klxit.github.io/Outlook-addin/functions.html"/>
+    </bt:Urls>
+
+    <bt:ShortStrings>
+      <bt:String id="groupLabel" DefaultValue="Wrike Tools"/>
+      <bt:String id="buttonLabel" DefaultValue="Check Wrike ID"/>
+    </bt:ShortStrings>
+
+    <bt:LongStrings>
+      <bt:String id="buttonDescription" DefaultValue="Verify that your email subject includes a Wrike Task ID before sending."/>
+    </bt:LongStrings>
+  </Resources>
+
+  <!-- Function File -->
+  <FunctionFile resid="functionFile"/>
+
 </OfficeApp>
