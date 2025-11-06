@@ -1,56 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
-           xsi:type="MailApp">
+Office.actions.associate("onMessageSendHandler", async function (event) {
+  try {
+    const item = Office.context.mailbox.item;
 
-  <Id>f3b3f0c8-2b5f-4bbf-9e5f-44b4d4b6a123</Id>
-  <Version>1.0.0.0</Version>
-  <ProviderName>Kalexius</ProviderName>
-  <DisplayName DefaultValue="Wrike ID Reminder" />
-  <Description DefaultValue="Reminds users to include a Wrike Task ID before sending emails." />
-  <SupportUrl DefaultValue="https://github.com/KLXIT/Outlook-addin" />
+    const subjectResult = await new Promise((resolve) => {
+      item.subject.getAsync((asyncResult) => {
+        resolve(asyncResult.value || "");
+      });
+    });
 
-  <Hosts>
-    <Host Name="Mailbox" />
-  </Hosts>
+    const subject = subjectResult.trim();
+    const wrikePattern = /(WRK-\d{3,6}|#\d{3,6})/i;
 
-  <Requirements>
-    <Sets DefaultMinVersion="1.12">
-      <Set Name="Mailbox" />
-    </Sets>
-  </Requirements>
+    if (!wrikePattern.test(subject)) {
+      const confirmed = await new Promise((resolve) => {
+        Office.context.ui.displayDialogAsync(
+          "https://kalexius-outlook-addin.netlify.app/wrike-reminder.html",
+          { height: 30, width: 40 },
+          (result) => {
+            const dialog = result.value;
+            dialog.addEventHandler(
+              Office.EventType.DialogMessageReceived,
+              (arg) => {
+                dialog.close();
+                resolve(arg.message === "yes");
+              }
+            );
+          }
+        );
+      });
 
-  <Permissions>ReadWriteItem</Permissions>
+      if (!confirmed) {
+        event.completed({ allowEvent: false }); // cancel send
+        return;
+      }
+    }
 
-  <VersionOverrides
-      xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
-      xsi:type="VersionOverridesV1_1">
-
-    <Requirements>
-      <bt:Sets DefaultMinVersion="1.12">
-        <bt:Set Name="Mailbox" />
-      </bt:Sets>
-    </Requirements>
-
-    <Hosts>
-      <Host xsi:type="MailHost">
-        <LaunchEvents>
-          <LaunchEvent
-              Type="OnMessageSend"
-              FunctionName="onMessageSendHandler"
-              SourceLocation="https://klxit.github.io/Outlook-addin/functions.html" />
-        </LaunchEvents>
-      </Host>
-    </Hosts>
-
-    <Resources>
-      <bt:Urls>
-        <bt:Url id="FunctionFileUrl"
-                DefaultValue="https://klxit.github.io/Outlook-addin/functions.html" />
-      </bt:Urls>
-    </Resources>
-
-  </VersionOverrides>
-</OfficeApp>
+    event.completed({ allowEvent: true }); // allow send
+  } catch (err) {
+    console.error("Wrike Add-in error:", err);
+    event.completed({ allowEvent: true });
+  }
+});
