@@ -13,7 +13,7 @@
   <SupportUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/"/>
 
   <!-- ✅ Now hosted PNG icon -->
-  <IconUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/icon-32.png"/>
+  <IconUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/icons-64.png"/>
 
   <Hosts>
     <Host Name="Mailbox"/>
@@ -60,3 +60,4 @@
 
   </VersionOverrides>
 </OfficeApp>
+
