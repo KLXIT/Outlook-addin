@@ -12,8 +12,8 @@
   <Description DefaultValue="Reminds users to include a Wrike Task ID before sending emails."/>
   <SupportUrl DefaultValue="https://kalexius-outlook-addin.netlify.app/"/>
 
-  <!-- ✅ Microsoft-hosted PNG icon (required valid image file) -->
-  <IconUrl DefaultValue="https://static2.sharepointonline.com/files/fabric-cdn-prod_20230815.001/assets/item-types/16/image.png"/>
+  <!-- ✅ Valid .png icon -->
+  <IconUrl DefaultValue="https://cdn.iconscout.com/icon/free/png-256/microsoft-2752158-2285000.png"/>
 
   <Hosts>
     <Host Name="Mailbox"/>
