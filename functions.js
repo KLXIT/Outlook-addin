@@ -14,7 +14,7 @@ Office.actions.associate("onMessageSendHandler", async function (event) {
     if (!wrikePattern.test(subject)) {
       const confirmed = await new Promise((resolve) => {
         Office.context.ui.displayDialogAsync(
-          "https://kalexius-outlook-addin.netlify.app/wrike-reminder.html",
+          "https://klxit.github.io/Outlook-addin/wrike-reminder.html",  // ← Updated URL
           { height: 30, width: 40 },
           (result) => {
             const dialog = result.value;
@@ -30,12 +30,12 @@ Office.actions.associate("onMessageSendHandler", async function (event) {
       });
 
       if (!confirmed) {
-        event.completed({ allowEvent: false }); // cancel send
+        event.completed({ allowEvent: false });
         return;
       }
     }
 
-    event.completed({ allowEvent: true }); // allow send
+    event.completed({ allowEvent: true });
   } catch (err) {
     console.error("Wrike Add-in error:", err);
     event.completed({ allowEvent: true });
