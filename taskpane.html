@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Wrike ID Reminder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0078d4;
+            font-size: 20px;
+            margin-top: 0;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: none;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        button.secondary {
+            background-color: #6c757d;
+            margin-top: 8px;
+        }
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+        .button-group {
+            display: none;
+            gap: 10px;
+        }
+        .button-group.show {
+            display: flex;
+            flex-direction: column;
+        }
+        .button-group button {
+            margin-top: 0;
+            flex: 1;
+        }
+        .info {
+            font-size: 13px;
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wrike ID Reminder</h1>
+        
+        <div id="statusMessage" class="status"></div>
+        
+        <p>This add-in checks if your email subject contains a Wrike Task ID before sending.</p>
+        
+        <button id="checkButton">Check Subject for Wrike ID</button>
+        
+        <div id="buttonGroup" class="button-group">
+            <button id="sendAnywayButton" class="secondary">Send Anyway</button>
+            <button id="skipReminderButton" class="secondary">Skip Wrike ID Reminder</button>
+            <button id="cancelButton" class="secondary">Cancel & Edit</button>
+        </div>
+        
+        <div class="info">
+            <strong>Format:</strong> Wrike Task IDs typically look like:<br>
+            • [WRIKE-12345]<br>
+            • WID-98765<br>
+            • Task #54321
+        </div>
+    </div>
+
+    <script>
+        // Initialize the Office Add-in
+        Office.onReady((reason) => {
+            if (reason === Office.MailboxEnums.MailboxDiagnosticsReason.ClientReady) {
+                document.getElementById("checkButton").onclick = checkWrikeId;
+                document.getElementById("sendAnywayButton").onclick = sendAnyway;
+                document.getElementById("skipReminderButton").onclick = skipReminder;
+                document.getElementById("cancelButton").onclick = cancelSend;
+            }
+        });
+
+        function checkWrikeId() {
+            const item = Office.context.mailbox.item;
+            const subject = item.subject;
+            const statusDiv = document.getElementById("statusMessage");
+            const buttonGroup = document.getElementById("buttonGroup");
+
+            // Simple check for Wrike ID patterns
+            const wrikeIdPatterns = [
+                /\[?WRIKE-\d+\]?/i,
+                /WID-\d+/i,
+                /Task\s*#\d+/i,
+                /\[?[A-Z]+-\d+\]?/i  // Generic ID pattern
+            ];
+
+            const hasWrikeId = wrikeIdPatterns.some(pattern => pattern.test(subject));
+
+            if (hasWrikeId) {
+                statusDiv.className = "status success";
+                statusDiv.innerHTML = "✓ Wrike ID found in subject!";
+                buttonGroup.classList.remove("show");
+            } else {
+                statusDiv.className = "status error";
+                statusDiv.innerHTML = "✗ No Wrike ID found. Please add a Wrike Task ID to your subject.";
+                buttonGroup.classList.add("show");
+            }
+        }
+
+        function sendAnyway() {
+            const item = Office.context.mailbox.item;
+            item.send();
+        }
+
+        function skipReminder() {
+            const item = Office.context.mailbox.item;
+            item.send();
+        }
+
+        function cancelSend() {
+            const statusDiv = document.getElementById("statusMessage");
+            const buttonGroup = document.getElementById("buttonGroup");
+            statusDiv.className = "status";
+            statusDiv.innerHTML = "";
+            buttonGroup.classList.remove("show");
+        }
+    </script>
+</body>
+</html>
